@@ -1,23 +1,29 @@
+Dives = new Mongo.Collection("dives");
+
 if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
-
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+  // This code only runs on the client
+  Template.body.helpers({
+    dives: function () {
+      return Dives.find({}, {sort: {createdAt: -1}});
     }
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+  Template.body.events({
+    "submit .new-dive": function (event) {
+      var text = event.target.text.value;
+
+      Dives.insert({
+        text: text,
+        createdAt: new Date()
+      });
+      event.target.text.value = "";
+      return false;
     }
   });
-}
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
+  Template.dive.events({
+    "click .delete": function () {
+      Dives.remove(this._id);
+    }
   });
 }

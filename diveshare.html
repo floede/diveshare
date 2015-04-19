@@ -1,14 +1,42 @@
 <head>
-  <title>diveshare</title>
+  <title>Diveshare Prototype</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <div class="container">
+    <header>
+      <h1>Dives</h1>
+    </header>
 
-  {{> hello}}
+    <h2>Input the details of your dive</h2>
+    <form class="new-dive">
+      <input type="text" name="divesite" placeholder="Divesite" />
+      <input type="text" name="city" placeholder="City">
+      <input type="text" name="country" placeholder="Country">
+      <input type="date" name="date">
+
+      <label for="ratedive">Please rate your dive</label>
+      <input type="radio" name="ratedive" value="1">1
+      <input type="radio" name="ratedive" value="2">2
+      <input type="radio" name="ratedive" value="3">3
+      <input type="radio" name="ratedive" value="4">4
+      <input type="radio" name="ratedive" value="5">5
+
+    </form>
+
+    <div>
+      <h2>Recent dives</h2>
+      {{#each dives}}
+        {{> dive}}
+      {{/each}}
+    </div>
+  </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="dive">
+    <li class="{{#if checked}}checked{{/if}}">
+      <button class="delete">&times;</button>
+
+      <span class="text">{{text}}</span>
+    </li>
 </template>
